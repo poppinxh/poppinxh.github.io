@@ -3,163 +3,75 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f4eee2">
-<title>造字局 · 汉字炼金术</title>
-<meta name="description" content="把两个字拆开，炼一个世上没有的字：程序为它生成读音、字义与五行，收进你的私人字典。">
+<meta name="theme-color" content="#efe8da">
+<title>字相 · 一字之相</title>
+<meta name="description" content="问一个字，看它今日之相：拆字、五行、干支、节气、纳音、消息卦与六十四卦，出一页字牒。">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<a class="skip-link" href="#forge">跳到炼字台</a>
+<a class="skip-link" href="#ask">跳到问字</a>
 
-<header class="topbar">
-  <a class="brand" href="./" aria-label="造字局 首页">
-    <span class="brand__seal" aria-hidden="true">字</span>
-    <span class="brand__text">造字局<small>ZI FORGE · 汉字炼金术</small></span>
+<header class="top">
+  <a class="brand" href="./" aria-label="字相 首页">
+    <span class="brand__seal" aria-hidden="true">相</span>
+    <span class="brand__text">字相<small>ZI XIANG</small></span>
   </a>
-  <div class="topbar__tools">
-    <button class="chip-btn" id="dictBtn" aria-expanded="false" aria-controls="dict">
-      我的字典 <b id="dictCount">0</b>
+  <nav class="top__tools">
+    <button class="tool" id="shelfBtn" aria-expanded="false" aria-controls="shelf">
+      字牒册 <b id="shelfCount">0</b>
     </button>
-    <button class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="音效开关">♪</button>
-    <button class="icon-btn" id="themeBtn" aria-pressed="false" aria-label="切换深浅色">◐</button>
-  </div>
+    <button class="tool tool--icon" id="soundBtn" aria-pressed="true" aria-label="音效开关">♪</button>
+    <button class="tool tool--icon" id="themeBtn" aria-pressed="false" aria-label="切换深浅色">◐</button>
+  </nav>
 </header>
 
 <main>
-  <section class="hero">
-    <p class="eyebrow">拆开一个字，再拼一个世上没有的</p>
-    <h1>把两个字<em>拆</em>开，<br class="br-lg">炼一个<em>新字</em>。</h1>
-    <p class="lede">挑两个偏旁丢进炉里：一个管形，一个管意。炉子会替它算出读音、字义、五行与字品，再收进你的私人字典。</p>
-    <div class="hero__actions">
-      <button class="btn btn--ghost" id="randomBtn">随手一炼</button>
-      <span class="hint">或按 <kbd>Ctrl</kbd><span aria-hidden="true">+</span><kbd>Enter</kbd></span>
-    </div>
-  </section>
+  <section class="ask" id="ask">
+    <p class="kicker">日与字相会</p>
+    <h1>问一个字，<br class="br-lg">看它今日之相。</h1>
+    <p class="ask__lede">
+      一个字有它的形、它的意、它的五行与九星；一日有它的干支、节气与卦。
+      两下相遇，就是这一页字牒。
+    </p>
 
-  <section class="forge" id="forge">
-    <div class="forge__col">
-      <div class="naming">
-        <div class="naming__top">
-          <label class="naming__label" for="namingInput">这个字想叫什么</label>
-          <span class="naming__hint">可选 · 写一件还没有名字的事</span>
-        </div>
-        <input class="naming__input" id="namingInput" type="text" maxlength="40"
-               placeholder="例如：想辞职又不敢的那阵子" autocomplete="off" spellcheck="false">
-        <div class="naming__presets" id="namingPresets"></div>
+    <div class="ask__row">
+      <div class="field field--char">
+        <label for="chInput">字</label>
+        <input id="chInput" type="text" maxlength="8" placeholder="任写一字"
+               autocomplete="off" autocapitalize="off" spellcheck="false">
       </div>
-
-      <div class="slots">
-        <div class="slot" data-slot="a">
-          <div class="slot__top">
-            <span class="slot__label">第一半</span>
-            <span class="slot__from" data-role="from"></span>
-          </div>
-          <div class="slot__glyph" data-role="glyph" aria-hidden="true"></div>
-          <label class="visually-hidden" for="inputA">第一个字的输入框</label>
-          <input class="slot__input" id="inputA" data-slot="a" type="text" maxlength="8"
-                 placeholder="输入汉字" autocomplete="off" autocapitalize="off" spellcheck="false">
-          <div class="slot__parts" data-role="parts"></div>
-        </div>
-
-        <div class="slot" data-slot="b">
-          <div class="slot__top">
-            <span class="slot__label">第二半</span>
-            <span class="slot__from" data-role="from"></span>
-          </div>
-          <div class="slot__glyph" data-role="glyph" aria-hidden="true"></div>
-          <label class="visually-hidden" for="inputB">第二个字的输入框</label>
-          <input class="slot__input" id="inputB" data-slot="b" type="text" maxlength="8"
-                 placeholder="输入汉字" autocomplete="off" autocapitalize="off" spellcheck="false">
-          <div class="slot__parts" data-role="parts"></div>
-        </div>
+      <div class="field field--date">
+        <label for="dateInput">日</label>
+        <input id="dateInput" type="date">
       </div>
-
-      <button class="btn btn--primary btn--block" id="forgeBtn">
-        <span class="btn__flame" aria-hidden="true">火</span>
-        <span>开炉炼字</span>
+      <button class="go" id="askBtn" type="button">
+        <span>相</span>
       </button>
-      <p class="forge__note">炼字不消耗任何东西，也不上传任何东西。</p>
     </div>
 
-    <div class="result" id="result" aria-live="polite" aria-atomic="true">
-      <div class="empty">
-        <span class="empty__mark" aria-hidden="true">炉</span>
-        <p>炉子还空着。</p>
-        <small>左右两边各放一个偏旁，再点火。</small>
-      </div>
+    <div class="ask__hint">
+      <span>带日期看它今日之相，清空日期则只解字。</span>
+      <span class="ask__dot" aria-hidden="true">·</span>
+      <button class="link" id="dateToggle" type="button">清空日期</button>
+      <span class="ask__dot" aria-hidden="true">·</span>
+      <button class="link" id="sampleBtn" type="button">随手一字</button>
     </div>
   </section>
 
-  <section class="divine" id="divine" aria-labelledby="divineTitle">
-    <div class="section-head">
-      <h2 id="divineTitle">解字 · 问一日</h2>
-      <p>给一个日子和一个字，看它们之间有什么。日期可不改。</p>
-    </div>
-    <div class="divine__panel">
-      <div class="divine__form">
-        <div class="dform">
-          <label class="dform__item">
-            <span>字</span>
-            <input id="divineChar" type="text" maxlength="8" placeholder="任一字"
-                   autocomplete="off" spellcheck="false">
-          </label>
-          <label class="dform__item">
-            <span>日</span>
-            <input id="divineDate" type="date">
-          </label>
-          <button class="btn btn--primary dform__go" id="divineBtn" type="button">问</button>
-        </div>
-        <button class="btn btn--tiny" id="divineUse" type="button" aria-pressed="false">
-          用炉里这个字
-        </button>
-        <p class="divine__hint">
-          日子按干支、节气、消息卦、纳音与六十四卦取，字按部件、笔画与五行取；
-          两边的五行相遇即生克，最后以起卦定一句。
-        </p>
-      </div>
-      <div class="divine__out" id="divineOut" aria-live="polite"></div>
-    </div>
-  </section>
+  <section class="sheet" id="sheet" aria-live="polite" aria-atomic="true"></section>
 
-  <section class="disc" aria-labelledby="discTitle">
-    <div class="section-head">
-      <h2 id="discTitle">九宫字局盘</h2>
-      <p>依玄空九星排洛书九宫。炼出的字入中哪一星，就点亮哪一宫。</p>
-      <span class="disc__count" id="discCount">0 / 9</span>
+  <section class="shelf" id="shelf" aria-labelledby="shelfTitle" hidden>
+    <div class="shelf__head">
+      <h2 id="shelfTitle">字牒册</h2>
+      <button class="link" id="clearShelf" hidden>清空</button>
     </div>
-    <div class="disc__wrap">
-      <div class="disc__grid" id="discGrid"></div>
-      <ul class="disc__legend">
-        <li><b class="lg lg--gold">吉</b>一白 四绿 六白 八白 九紫</li>
-        <li><b class="lg lg--accent">凶</b>二黑 三碧 五黄 七赤</li>
-        <li><b class="lg lg--ink">中</b>五黄居中，最煞；当运之字难得</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="palette" aria-labelledby="paletteTitle">
-    <div class="section-head">
-      <h2 id="paletteTitle">偏旁盘</h2>
-      <p>点一下，就放进当前那半边。</p>
-    </div>
-    <div class="palette__groups" id="paletteGroups"></div>
-  </section>
-
-  <section class="dict" id="dict" aria-labelledby="dictTitle" hidden>
-    <div class="section-head">
-      <h2 id="dictTitle">我的字典</h2>
-      <div class="section-head__tools">
-        <p id="dictEmptyHint">炼出的字都会留在这里，只存在这台设备的浏览器里。</p>
-        <button class="btn btn--tiny" id="clearDict" hidden>清空</button>
-      </div>
-    </div>
-    <div class="dict__grid" id="dictGrid"></div>
+    <div class="shelf__grid" id="shelfGrid"></div>
   </section>
 </main>
 
 <footer class="foot">
-  <span>造字局 · 汉字炼金术</span>
-  <span>纯前端 · 不联网 · 数据只存在你的浏览器里</span>
+  <span>字相 · 一字之相</span>
+  <span>纯前端 · 不联网 · 数据只存在这台设备的浏览器里</span>
 </footer>
 
 <canvas id="exportCanvas" width="1000" height="1400" hidden></canvas>
