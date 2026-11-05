@@ -1,1 +1,169 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#172c2b"><title>离职开店 · 深夜小馆</title><link rel="stylesheet" href="style.css"></head><body><header><a class="brand" href="./">离职<span>开店</span><small>THE AFTER HOURS</small></a><div class="edition">经营实验 / 01 深夜小馆</div><button id="soundless" class="quiet">重新开店</button></header><main><section class="intro"><div><p class="eyebrow">把工牌放下，把卷帘门拉起来。</p><h1>今晚，<em>你是老板。</em></h1></div><div class="calendar"><span>试营业</span><strong id="day">01</strong><span>/ 30 天</span></div></section><section class="dashboard"><div class="scene-card"><div class="scene-head"><span class="live-dot"></span><span id="scene-status">打烊备店 · 等待开门</span><span id="weather">微风 / 宜开张</span></div><canvas id="shop" aria-label="深夜小馆店铺场景"></canvas><div class="scene-foot"><div><span class="tag">你的招牌</span><button id="rename">下班以后 ↗</button></div><p id="scene-caption">第一盏灯，已经替你点亮了。</p></div></div><aside><div class="ledger-title"><h2>老板账本</h2><span>本金 ¥100,000</span></div><div class="cash"><span>店里还剩</span><strong id="cash">¥68,000</strong><small>装修与押金已花费 ¥32,000</small></div><div class="metrics"><div><span>街坊口碑</span><strong id="rep">50<small>/100</small></strong><i><b id="rep-bar"></b></i></div><div><span>你的精力</span><strong id="energy">90<small>/100</small></strong><i><b id="energy-bar"></b></i></div></div><div class="daily-stats"><span>昨晚净利润<strong id="profit">—</strong></span><span>累计接待<strong id="served">0 人</strong></span></div><div class="note"><span>老板手记</span><p id="tip">没有老板会在第一天就知道所有答案。先开门。</p></div></aside></section><section class="bottom"><div class="control-panel"><div class="section-title"><h2>今晚怎么做</h2><span id="phase-label">01 / 开门前</span></div><div class="fields"><label>一碗热面的价格<div class="stepper"><button data-step="-2" aria-label="降价两元">−</button><strong><small>¥</small><span id="price">28</span></strong><button data-step="2" aria-label="涨价两元">＋</button></div><small>附近均价 ¥28 · 原料成本 ¥9</small></label><label>今晚准备多少碗<div class="stepper"><button data-stock="-10" aria-label="减少十份">−</button><strong><span id="stock">50</span><small> 碗</small></strong><button data-stock="10" aria-label="增加十份">＋</button></div><small>剩下的原料，当晚不能再用</small></label></div><div class="crew"><div><strong>请一位帮手</strong><small>¥180 / 晚 · 多接待 25 人，少消耗精力</small></div><button id="helper" role="switch" aria-checked="false" aria-label="请帮手"><i></i></button></div><div class="forecast"><span>今晚预计客流</span><strong id="forecast">约 36–52 人</strong><small>预估，不是承诺。夜里总有意外。</small></div><button id="open" class="primary">拉起卷帘门 <span>开始第 1 晚 ↗</span></button><p class="save-note">自动保存在这台设备 · 无需注册</p></div><div class="journal"><div class="section-title"><h2>巷子里的声音</h2><span>THE NEIGHBORHOOD</span></div><div id="journal"></div></div></section><footer><span>离职开店 / 一场不用真的辞职的经营实验</span><span>规则驱动试玩版 · 不接实时 AI</span></footer></main><dialog id="event"><div class="modal-label">深夜来信 <span id="event-time">23:17</span></div><h2 id="event-title"></h2><p id="event-text"></p><div id="choices"></div><small>你的选择会影响账本、口碑和精力。</small></dialog><dialog id="result"><div class="modal-label">今晚打烊了 <span id="result-day"></span></div><h2 id="result-title"></h2><div id="receipt"></div><p id="result-copy"></p><button id="next" class="primary">收好账本，准备明天 ↗</button></dialog><dialog id="ending"><div class="modal-label">三十天后 / YOUR LITTLE BUSINESS</div><h2 id="ending-title"></h2><p id="ending-copy"></p><div id="ending-stats"></div><button id="share" class="primary">复制我的开店成绩 ↗</button><button id="restart" class="secondary">换一种活法，再开一次</button></dialog><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f4eee2">
+<title>造字局 · 汉字炼金术</title>
+<meta name="description" content="把两个字拆开，炼一个世上没有的字：程序为它生成读音、字义与五行，收进你的私人字典。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#forge">跳到炼字台</a>
+
+<header class="topbar">
+  <a class="brand" href="./" aria-label="造字局 首页">
+    <span class="brand__seal" aria-hidden="true">字</span>
+    <span class="brand__text">造字局<small>ZI FORGE · 汉字炼金术</small></span>
+  </a>
+  <div class="topbar__tools">
+    <button class="chip-btn" id="dictBtn" aria-expanded="false" aria-controls="dict">
+      我的字典 <b id="dictCount">0</b>
+    </button>
+    <button class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="音效开关">♪</button>
+    <button class="icon-btn" id="themeBtn" aria-pressed="false" aria-label="切换深浅色">◐</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">拆开一个字，再拼一个世上没有的</p>
+    <h1>把两个字<em>拆</em>开，<br class="br-lg">炼一个<em>新字</em>。</h1>
+    <p class="lede">挑两个偏旁丢进炉里：一个管形，一个管意。炉子会替它算出读音、字义、五行与字品，再收进你的私人字典。</p>
+    <div class="hero__actions">
+      <button class="btn btn--ghost" id="randomBtn">随手一炼</button>
+      <span class="hint">或按 <kbd>Ctrl</kbd><span aria-hidden="true">+</span><kbd>Enter</kbd></span>
+    </div>
+  </section>
+
+  <section class="forge" id="forge">
+    <div class="forge__col">
+      <div class="naming">
+        <div class="naming__top">
+          <label class="naming__label" for="namingInput">这个字想叫什么</label>
+          <span class="naming__hint">可选 · 写一件还没有名字的事</span>
+        </div>
+        <input class="naming__input" id="namingInput" type="text" maxlength="40"
+               placeholder="例如：想辞职又不敢的那阵子" autocomplete="off" spellcheck="false">
+        <div class="naming__presets" id="namingPresets"></div>
+      </div>
+
+      <div class="slots">
+        <div class="slot" data-slot="a">
+          <div class="slot__top">
+            <span class="slot__label">第一半</span>
+            <span class="slot__from" data-role="from"></span>
+          </div>
+          <div class="slot__glyph" data-role="glyph" aria-hidden="true"></div>
+          <label class="visually-hidden" for="inputA">第一个字的输入框</label>
+          <input class="slot__input" id="inputA" data-slot="a" type="text" maxlength="8"
+                 placeholder="输入汉字" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <div class="slot__parts" data-role="parts"></div>
+        </div>
+
+        <div class="slot" data-slot="b">
+          <div class="slot__top">
+            <span class="slot__label">第二半</span>
+            <span class="slot__from" data-role="from"></span>
+          </div>
+          <div class="slot__glyph" data-role="glyph" aria-hidden="true"></div>
+          <label class="visually-hidden" for="inputB">第二个字的输入框</label>
+          <input class="slot__input" id="inputB" data-slot="b" type="text" maxlength="8"
+                 placeholder="输入汉字" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <div class="slot__parts" data-role="parts"></div>
+        </div>
+      </div>
+
+      <button class="btn btn--primary btn--block" id="forgeBtn">
+        <span class="btn__flame" aria-hidden="true">火</span>
+        <span>开炉炼字</span>
+      </button>
+      <p class="forge__note">炼字不消耗任何东西，也不上传任何东西。</p>
+    </div>
+
+    <div class="result" id="result" aria-live="polite" aria-atomic="true">
+      <div class="empty">
+        <span class="empty__mark" aria-hidden="true">炉</span>
+        <p>炉子还空着。</p>
+        <small>左右两边各放一个偏旁，再点火。</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="divine" id="divine" aria-labelledby="divineTitle">
+    <div class="section-head">
+      <h2 id="divineTitle">解字 · 问一日</h2>
+      <p>给一个日子和一个字，看它们之间有什么。日期可不改。</p>
+    </div>
+    <div class="divine__panel">
+      <div class="divine__form">
+        <div class="dform">
+          <label class="dform__item">
+            <span>字</span>
+            <input id="divineChar" type="text" maxlength="8" placeholder="任一字"
+                   autocomplete="off" spellcheck="false">
+          </label>
+          <label class="dform__item">
+            <span>日</span>
+            <input id="divineDate" type="date">
+          </label>
+          <button class="btn btn--primary dform__go" id="divineBtn" type="button">问</button>
+        </div>
+        <button class="btn btn--tiny" id="divineUse" type="button" aria-pressed="false">
+          用炉里这个字
+        </button>
+        <p class="divine__hint">
+          日子按干支、节气、消息卦、纳音与六十四卦取，字按部件、笔画与五行取；
+          两边的五行相遇即生克，最后以起卦定一句。
+        </p>
+      </div>
+      <div class="divine__out" id="divineOut" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="disc" aria-labelledby="discTitle">
+    <div class="section-head">
+      <h2 id="discTitle">九宫字局盘</h2>
+      <p>依玄空九星排洛书九宫。炼出的字入中哪一星，就点亮哪一宫。</p>
+      <span class="disc__count" id="discCount">0 / 9</span>
+    </div>
+    <div class="disc__wrap">
+      <div class="disc__grid" id="discGrid"></div>
+      <ul class="disc__legend">
+        <li><b class="lg lg--gold">吉</b>一白 四绿 六白 八白 九紫</li>
+        <li><b class="lg lg--accent">凶</b>二黑 三碧 五黄 七赤</li>
+        <li><b class="lg lg--ink">中</b>五黄居中，最煞；当运之字难得</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="palette" aria-labelledby="paletteTitle">
+    <div class="section-head">
+      <h2 id="paletteTitle">偏旁盘</h2>
+      <p>点一下，就放进当前那半边。</p>
+    </div>
+    <div class="palette__groups" id="paletteGroups"></div>
+  </section>
+
+  <section class="dict" id="dict" aria-labelledby="dictTitle" hidden>
+    <div class="section-head">
+      <h2 id="dictTitle">我的字典</h2>
+      <div class="section-head__tools">
+        <p id="dictEmptyHint">炼出的字都会留在这里，只存在这台设备的浏览器里。</p>
+        <button class="btn btn--tiny" id="clearDict" hidden>清空</button>
+      </div>
+    </div>
+    <div class="dict__grid" id="dictGrid"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>造字局 · 汉字炼金术</span>
+  <span>纯前端 · 不联网 · 数据只存在你的浏览器里</span>
+</footer>
+
+<canvas id="exportCanvas" width="1000" height="1400" hidden></canvas>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
